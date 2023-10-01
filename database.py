@@ -16,7 +16,7 @@ async def sql_write_sing(us, data):
     values_list = data
     my_string = '\n'.join(values_list)
     print((us,my_string))
-    cur.execute('INSERT INTO singUp (user, description ) VALUES (?, ?)', (us,my_string))
+    cur.execute('INSERT INTO singUp (user, description) VALUES (?, ?)', (us,my_string))
     base.commit()
 
 async def sql_read_sing():
