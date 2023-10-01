@@ -8,15 +8,15 @@ def sql_start():
     cur = base.cursor()
     if base:
         print("Data base connected OK!")
-    base.execute('CREATE TABLE IF NOT EXISTS singUp(user TEXT PRIMARY KEY, description TEXT)')
-    base.execute('CREATE TABLE IF NOT EXISTS pay(id TEXT PRIMARY KEY, username TEXT, photo TEXT, price TEXT)')
+    base.execute('CREATE TABLE IF NOT EXISTS singUp(user TEXT, description TEXT)')
+    base.execute('CREATE TABLE IF NOT EXISTS pay(id TEXT, username TEXT, photo TEXT, price TEXT)')
     base.commit()
  
 async def sql_write_sing(us, data):
     values_list = data
     my_string = '\n'.join(values_list)
     print((us,my_string))
-    cur.execute('REPLACE INTO singUp VALUES (?, ?)', (us,my_string))
+    cur.execute('INSERT INTO singUp (user, description ) VALUES (?, ?)', (us,my_string))
     base.commit()
 
 async def sql_read_sing():
@@ -27,7 +27,7 @@ async def sql_read_sing():
 async def sql_write_pay(id, us, arr):
     data = arr[1]
     price = arr[0]
-    cur.execute('REPLACE INTO pay VALUES (?, ?, ?, ?)', (id, us, data, price))
+    cur.execute('INSERT INTO pay (id, username, photo, price) VALUES (?, ?, ?, ?)', (id, us, data, price))
     base.commit()
 
 async def sql_read_pay():

@@ -86,7 +86,11 @@ async def adminCheckSingUp(message: types.Message):
 async def adminCheckPay(message: types.Message):
     res = await sql_read_pay()
     for i in res:
-        await bot.send_photo(chat_id=message.from_user.id, photo=i[2], caption="@"+i[1]+'\n'+i[-1]+' рублей', reply_markup=f(i[0]))
+        if i[1] == None:
+            t = "None"
+        else:
+            t = i[1]
+        await bot.send_photo(chat_id=message.from_user.id, photo=i[2], caption="@"+t+'\n'+i[-1]+' рублей', reply_markup=f(i[0]))
 
 async def payGood(callback_query: types.CallbackQuery):
     tmp = callback_query.data.replace('proof ', '')
